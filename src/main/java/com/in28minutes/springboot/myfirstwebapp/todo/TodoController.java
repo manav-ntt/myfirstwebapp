@@ -23,7 +23,8 @@ public class TodoController {
 
     @RequestMapping("list-todos")
     public String listAllTodos(ModelMap modelMap) {
-        List<Todo> todos = todoService.findByUsername("in28minutes");
+        String username = (String) modelMap.get("name");
+        List<Todo> todos = todoService.findByUsername(username);
         modelMap.addAttribute("todos", todos);
         return "listTodos";
     }
@@ -40,7 +41,7 @@ public class TodoController {
         if (result.hasErrors()) {
             return "todo";
         }
-        todoService.addTodo((String) modelMap.get("name"), todo.getDescription(),todo.getTargetDate(), false);
+        todoService.addTodo((String) modelMap.get("name"), todo.getDescription(), todo.getTargetDate(), false);
         return "redirect:list-todos";
     }
 
